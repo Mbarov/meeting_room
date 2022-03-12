@@ -1,0 +1,61 @@
+{% extends 'main_app/base.html' %}
+
+{% block title %}
+{{ event.title }}
+{% endblock %}
+
+
+
+{% block content %}
+<div class="row">
+    <div class="col-3"></div>
+    <div class="col-6">
+
+
+<h3 class='text-center pt-5 pb-5'>{{ event.title }}</h3>
+
+<table class='event_detail '>
+    <tbody  >
+
+            <tr>
+                <th>Описание:</th>   <td> {{ event.description }}</td>
+            </tr>
+        
+            <tr>
+                <th>Забронировал</th>   <td>{{ event.user }}</td>
+            </tr>
+
+
+
+            <tr>
+                <th>Начало:</th>   <td> {{ event.start_time }}</td>
+            </tr>
+
+            <tr>
+                <th>Конец:</th>   <td>{{ event.end_time }}</td>
+            </tr>
+
+            <tr>
+                <th>Длительность:</th>   <td>{{ event.duration }}</td>
+            </tr>
+
+            <tr>
+                <th>Зарегистрировано:</th>   <td> {{ event.registered_at }}</td>
+            </tr>
+    </tbody>
+</table>
+</div>
+<div class="col-3"></div></div>
+
+<br><br>
+<div class="text-center" id='buttons'>
+{% if request.user == event.user  %}
+<a href="{% url 'remove' event_id=event.id %}"><button type='button' id='button2' class='btn '>
+    Удалить запись
+</button></a>
+{% endif %}
+<a href="{% url 'index'  %}"><button type='button' id='button2' class='btn '>
+    Вернуться на главную
+</button></a>
+</div>
+{% endblock %}

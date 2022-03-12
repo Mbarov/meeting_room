@@ -1,0 +1,44 @@
+{% extends 'main_app/base.html' %}
+
+{% block title %}
+Главная страница
+{% endblock %}
+
+
+
+{% block content %}
+
+{% if request.user.is_authenticated  %}
+    {{user}}
+    <a href="{% url 'logout' %}"> Выйти из аккаунта</a>
+{% else %}
+    <a href="{% url 'login'%} ">Вход в аккаунт</a>
+{% endif %}<br>
+
+
+{{year_today}}
+{% for day in week %}
+{{day}}
+{% endfor %}
+
+<br>
+<a href="{% url 'another_week' action='prev' year=year week_number=week_number %}">Предыдущая неделя</a><br>
+<a href="{% url 'another_week' action='next' year=year week_number=week_number %}">Следующая неделя</a>
+
+{% for event in events %}
+    
+    {% if event.is_active %}
+    <a href="{% url  'event_detail' event_id=event.id%}">
+        <p class='bg-warning'>
+        Заголовок {{ event.title }}<br>
+        Забронировал: {{event.user}}<br>
+        Начало  {{ event.start_time }}<br>
+        Конец {{ event.end_time }}<br>
+        </p>
+    </a>
+<br><br><br>
+    {% endif %}
+{% endfor %}
+<br>
+<a href="{% url 'new_booking' %}">Новое бронирование</a>
+{% endblock %}

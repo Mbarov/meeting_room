@@ -1,0 +1,129 @@
+{% extends 'main_app/base.html' %}
+
+
+{% block title %}
+Главная страница
+{% endblock %}
+
+{% block content %}
+
+<div class='row'>
+    <div class="col-6 top"></div>
+    <div class="col-6 top">
+        {% if request.user.is_authenticated  %}
+        <p class='bold-text'>{{user}}</p>
+        <a href="{% url 'logout' %}">
+            <button type='button' id='button4' class='btn '>
+                Выйти из аккаунта
+            </button>
+        </a>
+    {% else %}
+    <a href="{% url 'login'%} ">
+    <button type='button' id='button2' class='btn data-toggletext-white'>
+        Вход в аккаунт
+   </button></a>
+        
+    {% endif %}<br>
+    
+
+    </div>
+</div>
+
+
+
+<br>
+<div class='row'>
+    <div class="col-4 top">
+        <a href="{% url 'another_week' action='prev' year=year week_number=week_number %}">
+            <button type='button' id='button' class='btn  btn-block  data-toggletext-white'>
+            Предыдущая неделя
+           </button>
+        </a>
+    </div>
+    <div class="col-4 top">
+        <a href="{% url 'new_booking' %}">
+            <button type='button' id='button3' class='btn  btn-block  data-toggletext-white'>
+                Забронировать
+            </button>
+        </a>
+        </div>
+    <div class="col-4 top">
+        <a href="{% url 'another_week' action='next' year=year week_number=week_number %}">
+            <button type='button' id='button' class='btn  btn-block  data-toggletext-white'>
+                Следующая неделя
+            </button>
+        </a>
+        </div>
+</div>
+<br><br>
+
+
+<table >
+    <thead>
+        <tr><th>День недели</th><th>Понедельник</th><th>Вторник</th><th>Среда</th><th>Четверг</th><th>Пятница</th><th>Суббота</th><th>Воскресенье</th></tr>
+    
+        <tr>
+            <th>Дата</th>
+            {% for day in week %}
+                <th>{{day}}</th>
+            {% endfor %}
+        </tr>
+    </thead>
+    <tbody >
+
+        {% for hour in hours %}
+            <tr>
+                <td>{{hour}}</td>
+                {% for day in week %}
+                    <td></td>
+                {% endfor %}
+            
+            </tr>
+        {% endfor %} 
+
+
+
+
+        
+
+    </tbody>
+
+    {% for event in events %}   
+        {% if event.is_two_days %}
+
+        <td  class='event'  style='        
+        bottom:0%;
+        left:{{event.coordinate.0}}%;        
+        height{{event.coordinate.5}}%;'>
+        <a href="{% url 'event_detail' event_id=event.id%}">
+                {{ event.title }}
+        </a></td>
+
+
+        <td  class='event'  style='       
+        top:7.6%;
+        left:{{event.coordinate.4}}%;        
+        height:{{event.coordinate.6}}%;'>
+        <a href="{% url 'event_detail' event_id=event.id%}">
+                {{ event.title }}
+        </a></td>
+
+        {% else %}
+    
+        <td  class='event' style='      
+        top:{{event.coordinate.1}}%;
+        left:{{event.coordinate.0}}%;
+        height:{{event.coordinate.3}}%;'>
+        <a href="{% url 'event_detail' event_id=event.id%}"  >
+                {{ event.title }}
+            </a>
+        </td>
+        {% endif %}
+    {% endfor %}
+
+</table>
+{% endblock %}
+
+
+
+

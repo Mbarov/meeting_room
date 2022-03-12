@@ -1,0 +1,83 @@
+{% extends 'main_app/base.html' %}
+{% load crispy_forms_tags %}
+
+
+{% block title %}
+Новое бронирование
+{% endblock %}
+
+
+
+{% block content %}
+
+<div class="row">
+  <div class="col-3"></div>
+  <div class="col-6">
+
+<div class="container">
+    <h2 class="form-group pt-4 pb-5 text-center">Введите данные</h2>
+    <form class="form-group " id='input' method="post">
+        {% csrf_token %}
+        <h5> Заголовок  </h5>
+        <p > {{ form.title }} </p>
+        <h5> Описание  </h5>
+        <p> {{ form.description }} </p>
+
+
+        <h5> Начало  </h5>
+        <p> <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+          {{ form.start_time }}
+          <div class="input-group-append" data-target="#datetimepicker1" data-toggle="datetimepicker">
+            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+          </div>
+        </div> </p>
+
+
+        <h5> Конец  </h5>
+        <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+          {{ form.end_time }}
+          <div class="input-group-append" data-target="#datetimepicker2" data-toggle="datetimepicker">
+            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+          </div>
+        </div><br><br>
+
+
+        <h5 class='error'>{{ error }}<h5><br>
+          <h5>{{success}}</h5>
+      <div class="form-group">        
+        <div class="col-sm-offset-2 col-sm-10 text-center">
+          <a href="{% url 'index'%}">
+            <button type='button' id='button2' class='btn data-toggletext-white '>На главную
+              </button>
+          </a>
+          <button type="submit" id='button' name="button" class="btn ml-3">Забронировать</button>
+        </div>
+      </div> 
+    </form>
+  </div>
+
+  
+
+
+  
+</div>
+<div class="col-3"></div></div>
+
+  <script>
+    $(function () {
+      $("#datetimepicker1").datetimepicker({
+        format: 'DD-MM-YYYY HH:mm',
+        sideBySide: true,
+      });
+    });
+    $(function () {
+      $("#datetimepicker2").datetimepicker({
+        format: 'DD-MM-YYYY HH:mm',
+        sideBySide: true,
+
+      });
+    });
+  </script>
+  
+
+{% endblock %}
